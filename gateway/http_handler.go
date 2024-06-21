@@ -1,6 +1,8 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type handler struct {
 	// GATEWAY
@@ -15,5 +17,4 @@ func (h *handler) registerRoutes(mux *http.ServeMux) {
 }
 
 func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
-
 }
