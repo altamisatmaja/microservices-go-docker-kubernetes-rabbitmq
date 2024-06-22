@@ -2,14 +2,17 @@ package main
 
 import (
 	"net/http"
+
+	common "github.com/altamisatmaja/commons"
+	pb "github.com/altamisatmaja/commons/api"
 )
 
 type handler struct {
-	// GATEWAY
+	client pb.OrderServiceClient
 }
 
-func NewHandler() *handler {
-	return &handler{}
+func NewHandler(client pb.OrderServiceClient) *handler {
+	return &handler{client}
 }
 
 func (h *handler) registerRoutes(mux *http.ServeMux) {
@@ -17,4 +20,12 @@ func (h *handler) registerRoutes(mux *http.ServeMux) {
 }
 
 func (h *handler) HandleCreateOrder(w http.ResponseWriter, r *http.Request) {
+	customerID := r.PathValue("customerID")
+	var items []*pb.ItemsWithQuantity
+
+	if err := common.ReadJson(r, &items); err != nil {
+		common.WriteError(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	h.client.CreateOrder(r.Context(), &pb.CreateOrderRequest{CustomerID: customerID, Items: items})
 }
