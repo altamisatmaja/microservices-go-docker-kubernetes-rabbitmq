@@ -17,8 +17,8 @@ func NewGRPCHandler(grpcServer *grpc.Server) {
 	pb.RegisterOrderServiceServer(grpcServer, handler)
 }
 
-func (h *grpcHandler) CreateOrder(context.Context, *pb.CreateOrderRequest) (*pb.Order, error) {
-	log.Println("Pesanan baru diterima!")
+func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest) (*pb.Order, error) {
+	log.Printf("Pesanan baru diterima! Order %v", p)
 	o := &pb.Order{
 		ID: "42",
 	}
