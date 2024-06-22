@@ -13,7 +13,7 @@ import (
 
 var (
 	httpAddr          = common.EnvString("HTTP_ADDR", ":8080")
-	ordersServiceAddr = "localhost:3000"
+	ordersServiceAddr = "localhost:2000"
 )
 
 func main() {
